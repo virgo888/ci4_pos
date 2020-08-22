@@ -28,8 +28,9 @@ if(! defined('T_SALES_HISTORY')) define('T_SALES_HISTORY', 'sales_history');
 if(! defined('T_SALES_DETAIL')) define('T_SALES_DETAIL', 'sales_detail');
 if(! defined('T_SALES_DETAIL_HISTORY')) define('T_SALES_DETAIL_HISTORY', 'sales_detail_history');
 
-
 if(! defined('T_PRODUCT_CATEGORY')) define('T_PRODUCT_CATEGORY', 'product_category');
+
+if(! defined('T_USER')) define('T_USER', 'users');
 
 /**
  * DEFINE VARIABLE FOR GENERAL
@@ -57,6 +58,7 @@ if(! defined('ACTION_BY')) define('ACTION_BY', 'action_by');
 if(! defined('CREATED_DATE')) define('CREATED_DATE', 'created_date');
 if(! defined('CREATED_BY')) define('CREATED_BY', 'created_by');
 if(! defined('UPDATED_DATE')) define('UPDATED_DATE', 'updated_date');
+if(! defined('DELETED_DATE')) define('DELETED_DATE', 'deleted_date');
 if(! defined('UPDATED_BY')) define('UPDATED_BY', 'updated_by');
 
 
