@@ -9,7 +9,6 @@ class Users extends BaseController
 
 	public function index()
 	{
-		// return $this->respond([[1], [2]]);
 		$users = new UsersModel;
 
 		$users = $users->paginate();
