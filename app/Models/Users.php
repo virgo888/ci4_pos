@@ -14,10 +14,10 @@ class Users extends Model
     protected $allowedFields = [
     	NAME, 
     	EMAIL,
-        // 'password',
-        // 'token',
-        // 'active',
-        // 'enable'
+        PASSWORD,
+        TOKEN,
+        ACTIVE,
+        ENABLE
     ];
 
     protected $useTimestamps = true;

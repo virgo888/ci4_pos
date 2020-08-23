@@ -53,6 +53,8 @@ if(! defined('TOTAL')) define('TOTAL', 'total');
 if(! defined('STATUS')) define('STATUS', 'status');
 if(! defined('ENABLE')) define('ENABLE', 'enable');
 if(! defined('ACTIVE')) define('ACTIVE', 'active');
+if(! defined('TOKEN')) define('TOKEN', 'token');
+if(! defined('PASSWORD')) define('PASSWORD', 'password');
 if(! defined('ACTION_DATE')) define('ACTION_DATE', 'action_date');
 if(! defined('ACTION_BY')) define('ACTION_BY', 'action_by');
 if(! defined('CREATED_DATE')) define('CREATED_DATE', 'created_date');
