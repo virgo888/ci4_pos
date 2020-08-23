@@ -34,6 +34,21 @@ class Users extends BaseController
 	{
 		$data = $this->request->getPost();
 
+		$validation =  \Config\Services::validation();
+
+		$validation->setRules([
+		    PASSWORD => 'required|min_length[6]|max_length[32]'
+		]);
+
+		if(!$validation->withRequest($this->request)->run())
+		{
+			return $this->fail($validation->getErrors(), 400);
+		}
+
+		$password = $data[PASSWORD];
+		$password_hash = get_hash($password);
+		$data[PASSWORD] = $password_hash;
+
 		$users = new UsersModel;
 
 		$id = $users->insert($data);
@@ -102,6 +117,28 @@ class Users extends BaseController
 		{
 			return $this->failServerError();
 		}
+	}
+
+	public function validasi()
+	{
+		$validation =  \Config\Services::validation();
+
+		$validation->setRules([
+		    NAME => 'required',
+		    PASSWORD => 'required'
+		]);
+
+		if($validation->withRequest($this->request)->run())
+		{
+			$error = "test";
+		}
+		else
+		{
+           $error = $validation->getErrors();
+           $error = "tost";
+		}
+
+		return $error;
 	}
 
 }
