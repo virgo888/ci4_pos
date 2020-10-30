@@ -1,9 +1,10 @@
 <?php namespace App\Controllers\Api;
 
-use App\Controllers\Base\BaseController;
+
+use App\Controllers\Base\BaseApiController;
 use App\Models\Users as UsersModel;
 
-class Users extends BaseController
+class Users extends BaseApiController
 {
 	use \CodeIgniter\API\ResponseTrait;
 
@@ -11,12 +12,12 @@ class Users extends BaseController
 	{
 		$users = new UsersModel;
 
-		$users = $users->paginate();
+		$users = $users->findAll();
 
 		return $this->respond($users);
 	}
 
-	public function show($id)
+	public function show($id = NULL)
 	{
 		$users = new UsersModel;
 
@@ -37,7 +38,14 @@ class Users extends BaseController
 		$validation =  \Config\Services::validation();
 
 		$validation->setRules([
-		    PASSWORD => 'required|min_length[6]|max_length[32]'
+		    PASSWORD => [
+                'rules' => 'required|min_length[6]|max_length[32]',
+                'errors' => [
+                    'required'   => 'Password harus di isi.',
+                    'min_length' => 'Password minimal 6 karakter.',
+                    'max_length' => 'Password tidak boleh lebih dari 32 karakter.'
+                ]
+            ]
 		]);
 
 		if(!$validation->withRequest($this->request)->run())
@@ -65,14 +73,14 @@ class Users extends BaseController
 		}
 
 		$user = $users->find($id);
-		$user['url'] = site_url('/users/'.$id);
+		$user['url'] = site_url('/api/users/'.$id);
 
 		$this->response->setHeader("location", $user['url']);
 
 		return $this->respondCreated($user);
 	}
 
-	public function update($id)
+	public function update($id = NULL)
 	{
 		$data = $this->request->getRawInput();
 
@@ -98,7 +106,7 @@ class Users extends BaseController
 		return $this->respond($user);
 	}
 
-	public function delete($id)
+	public function delete($id = NULL)
 	{
 		$users = new UsersModel;
 
@@ -118,27 +126,4 @@ class Users extends BaseController
 			return $this->failServerError();
 		}
 	}
-
-	public function validasi()
-	{
-		$validation =  \Config\Services::validation();
-
-		$validation->setRules([
-		    NAME => 'required',
-		    PASSWORD => 'required'
-		]);
-
-		if($validation->withRequest($this->request)->run())
-		{
-			$error = "test";
-		}
-		else
-		{
-           $error = $validation->getErrors();
-           $error = "tost";
-		}
-
-		return $error;
-	}
-
 }
