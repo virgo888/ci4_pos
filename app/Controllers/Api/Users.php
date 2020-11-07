@@ -1,9 +1,10 @@
 <?php namespace App\Controllers\Api;
 
-use App\Controllers\Base\BaseController;
+
+use App\Controllers\Base\BaseApiController;
 use App\Models\Users as UsersModel;
 
-class Users extends BaseController
+class Users extends BaseApiController
 {
 	use \CodeIgniter\API\ResponseTrait;
 
@@ -11,12 +12,12 @@ class Users extends BaseController
 	{
 		$users = new UsersModel;
 
-		$users = $users->paginate();
+		$users = $users->findAll();
 
 		return $this->respond($users);
 	}
 
-	public function show($id)
+	public function show($id = NULL)
 	{
 		$users = new UsersModel;
 
@@ -33,21 +34,17 @@ class Users extends BaseController
 	public function create()
 	{
 		$data = $this->request->getPost();
-
-		$validation =  \Config\Services::validation();
-
-		$validation->setRules([
-		    PASSWORD => 'required|min_length[6]|max_length[32]'
-		]);
-
-		if(!$validation->withRequest($this->request)->run())
+		
+		if(!empty($data[PASSWORD]))
 		{
-			return $this->fail($validation->getErrors(), 400);
+			$length_password = strlen($data[PASSWORD]);
+			if($length_password >= 6)
+			{
+				$password = $data[PASSWORD];
+				$password_hash = get_hash($password);
+				$data[PASSWORD] = $password_hash;
+			}
 		}
-
-		$password = $data[PASSWORD];
-		$password_hash = get_hash($password);
-		$data[PASSWORD] = $password_hash;
 
 		$users = new UsersModel;
 
@@ -65,19 +62,29 @@ class Users extends BaseController
 		}
 
 		$user = $users->find($id);
-		$user['url'] = site_url('/users/'.$id);
+		$user['url'] = site_url('/api/users/'.$id);
 
 		$this->response->setHeader("location", $user['url']);
 
 		return $this->respondCreated($user);
 	}
 
-	public function update($id)
+	public function update($id = NULL)
 	{
 		$data = $this->request->getRawInput();
 
 		$users = new UsersModel;
 
+		if(isset($data[PASSWORD]))
+		{
+			$length_password = strlen($data[PASSWORD]);
+			if($length_password >= 6)
+			{
+				$password = $data[PASSWORD];
+				$password_hash = get_hash($password);
+				$data[PASSWORD] = $password_hash;
+			}
+		}
 		// I do no want to send all the fields! Only waht I need to update!
 		$users->setUdpateRules($data);
 
@@ -98,7 +105,7 @@ class Users extends BaseController
 		return $this->respond($user);
 	}
 
-	public function delete($id)
+	public function delete($id = NULL)
 	{
 		$users = new UsersModel;
 
@@ -118,27 +125,4 @@ class Users extends BaseController
 			return $this->failServerError();
 		}
 	}
-
-	public function validasi()
-	{
-		$validation =  \Config\Services::validation();
-
-		$validation->setRules([
-		    NAME => 'required',
-		    PASSWORD => 'required'
-		]);
-
-		if($validation->withRequest($this->request)->run())
-		{
-			$error = "test";
-		}
-		else
-		{
-           $error = $validation->getErrors();
-           $error = "tost";
-		}
-
-		return $error;
-	}
-
 }

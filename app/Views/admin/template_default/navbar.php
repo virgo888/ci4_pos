@@ -19,6 +19,7 @@
             Master
           </a>
           <div class="dropdown-menu">
+            <a class="dropdown-item" href="<?php echo base_url("admin/users"); ?>"><i class="fas fa-users"></i> Daftar User</a>
             <a class="dropdown-item" href="<?php echo base_url("admin/product"); ?>">Produk</a>
             <a class="dropdown-item" href="<?php echo base_url("admin/supplier"); ?>">Supplier</a>
             <a class="dropdown-item" href="<?php echo base_url("admin/customer"); ?>">Customer</a>

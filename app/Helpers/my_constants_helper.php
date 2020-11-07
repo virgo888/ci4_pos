@@ -117,3 +117,9 @@ if(! defined('ID_SALES')) define('ID_SALES', 'id_sales');
  */
 if(! defined('ID_PARENT')) define('ID_PARENT', 'id_parent');
 
+/**
+ * DEFINE VARIABLE FOR USERS
+ */
+if(! defined('ID_USER')) define('ID_USER', 'id_user');
+if(! defined('USERNAME')) define('USERNAME', 'username');
+
