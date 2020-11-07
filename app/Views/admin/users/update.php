@@ -37,7 +37,7 @@
             </div>
             <div class="form-group">
                 <label for="owner">No. HP</label>
-                <input type="hidden" name="phone_temp" id="phone_temp" value="<?= !empty($inputs) ? $inputs['phone'] : ""; ?>">
+                <input type="hidden" name="phone_temp" id="phone_temp" value="<?=$data->phone?>">
                 <input type="text" class="form-control form-control-sm" name="phone" id="phone" placeholder="NOMOR HP" value="<?= !empty($inputs['phone']) ? $inputs['phone'] : $data->phone; ?>">
             </div>
         </div>

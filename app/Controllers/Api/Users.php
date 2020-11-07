@@ -34,28 +34,17 @@ class Users extends BaseApiController
 	public function create()
 	{
 		$data = $this->request->getPost();
-
-		$validation =  \Config\Services::validation();
-
-		$validation->setRules([
-		    PASSWORD => [
-                'rules' => 'required|min_length[6]|max_length[32]',
-                'errors' => [
-                    'required'   => 'Password harus di isi.',
-                    'min_length' => 'Password minimal 6 karakter.',
-                    'max_length' => 'Password tidak boleh lebih dari 32 karakter.'
-                ]
-            ]
-		]);
-
-		if(!$validation->withRequest($this->request)->run())
+		
+		if(!empty($data[PASSWORD]))
 		{
-			return $this->fail($validation->getErrors(), 400);
+			$length_password = strlen($data[PASSWORD]);
+			if($length_password >= 6)
+			{
+				$password = $data[PASSWORD];
+				$password_hash = get_hash($password);
+				$data[PASSWORD] = $password_hash;
+			}
 		}
-
-		$password = $data[PASSWORD];
-		$password_hash = get_hash($password);
-		$data[PASSWORD] = $password_hash;
 
 		$users = new UsersModel;
 
@@ -86,6 +75,16 @@ class Users extends BaseApiController
 
 		$users = new UsersModel;
 
+		if(isset($data[PASSWORD]))
+		{
+			$length_password = strlen($data[PASSWORD]);
+			if($length_password >= 6)
+			{
+				$password = $data[PASSWORD];
+				$password_hash = get_hash($password);
+				$data[PASSWORD] = $password_hash;
+			}
+		}
 		// I do no want to send all the fields! Only waht I need to update!
 		$users->setUdpateRules($data);
 

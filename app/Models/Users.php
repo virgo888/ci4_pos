@@ -53,6 +53,13 @@ class Users extends Model
                 'max_length' => 'No. Telpon tidak boleh lebih dari 20 karakter',
                 'is_unique'  => 'No. Telpon sudah terdaftar di sistem.'
             ]
+        ],
+        PASSWORD => [
+            'rules' => 'required|min_length[6]',
+            'errors' => [
+                'required'   => 'Password harus di isi.',
+                'min_length' => 'Password minimal 6 karakter.'
+            ]
         ]
     ];
     protected $validationMessages = [];
@@ -102,6 +109,17 @@ class Users extends Model
                     'min_length' => 'No. Telpon minimal 5 karakter.',
                     'max_length' => 'No. Telpon tidak boleh lebih dari 20 karakter',
                     'is_unique'  => 'No. Telpon sudah terdaftar di sistem.'
+                ]
+            ];
+        }
+
+        if(isset($data[PASSWORD]))
+        {
+            $rules[PASSWORD] = [
+                'rules' => 'required|min_length[6]|max_length[32]',
+                'errors' => [
+                    'required'   => 'Password harus di isi.',
+                    'min_length' => 'Password minimal 6 karakter.'
                 ]
             ];
         }

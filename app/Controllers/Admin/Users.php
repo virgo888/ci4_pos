@@ -123,6 +123,7 @@ class Users extends BaseController
         $email_temp    = $this->request->getPost('email_temp');
         $phone_temp    = $this->request->getPost('phone_temp');
 
+        $params = [];
         if($username != $username_temp)
         {
         	$params[USERNAME] = $username;
